@@ -102,7 +102,7 @@ def _detect_text(texts: list[str]) -> RuleHit | None:
 
 
 async def _decode_qr_from_url(url: str) -> list[str]:
-    # OneBot 图片段通常只提供 URL，这里下载后用 OpenCV 同时尝试多码和单码识别。
+    # OneBot 图片段通常只提供 URL，这里下载后使用 OpenCV contrib 的微信二维码检测器。
     async with httpx.AsyncClient(timeout=10, follow_redirects=True) as client:
         response = await client.get(url)
         response.raise_for_status()
@@ -110,12 +110,12 @@ async def _decode_qr_from_url(url: str) -> list[str]:
     image = cv2.imdecode(data, cv2.IMREAD_COLOR)
     if image is None:
         return []
-    detector = cv2.QRCodeDetector()
-    ok, decoded, _, _ = detector.detectAndDecodeMulti(image)
-    if ok:
-        return [item for item in decoded if item]
-    single, _, _ = detector.detectAndDecode(image)
-    return [single] if single else []
+    if not hasattr(cv2, "wechat_qrcode_WeChatQRCode"):
+        logger.warning("OpenCV WeChatQRCode is unavailable; install opencv-contrib-python-headless")
+        return []
+    detector = cv2.wechat_qrcode_WeChatQRCode()
+    decoded, _ = detector.detectAndDecode(image)
+    return [item for item in decoded if item]
 
 
 def _to_message(content: Any) -> Message:

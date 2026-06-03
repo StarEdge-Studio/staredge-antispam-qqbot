@@ -62,7 +62,7 @@ uv run staredge-antispam-qqbot
 在已有 nonebot 项目中安装依赖：
 
 ```bash
-uv add nonebot-adapter-onebot httpx opencv-python-headless numpy
+uv add nonebot-adapter-onebot httpx opencv-contrib-python-headless numpy
 ```
 
 如果项目没有安装 nonebot2，也需要安装：
