@@ -1,4 +1,6 @@
 admins = [123456789]
+qq_whitelist = []
+group_whitelist = []
 appeal_email = "appeal@example.com"
 
 [audit]

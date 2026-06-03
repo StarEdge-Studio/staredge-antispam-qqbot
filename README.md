@@ -11,6 +11,8 @@
 - 单次违规处置：撤回、撤回相关所有消息、警告、移除、拉黑
 - 多次违规升级处置
 - SQLite 存储违规次数和审计日志
+- 群主、群管理员和 `qq_whitelist` 白名单用户跳过检测
+- `group_whitelist` 为空时检测所有群，非空时只检测列表内群
 
 ## 部署方式一：直接部署完整机器人
 
@@ -27,6 +29,8 @@ uv sync
 编辑 `antispam.toml`：
 
 - `admins`：处置负责人 QQ，可配置多个，警告内容默认使用第一个。
+- `qq_whitelist`：跳过检测的 QQ 白名单。
+- `group_whitelist`：群白名单，空列表检测所有群，非空时只检测列表中的群。
 - `appeal_email`：申诉邮箱。
 - `[domain]`：域名黑/白名单，`mode` 只能为 `blacklist` 或 `whitelist`。
 - `[qr]`：是否启用二维码识别。
