@@ -1,0 +1,36 @@
+admins = [123456789]
+appeal_email = "appeal@example.com"
+
+[audit]
+database = "data/antispam.sqlite3"
+
+[domain]
+# mode 只能二选一："blacklist" 或 "whitelist"
+mode = "blacklist"
+# 可直接写列表，也可写 txt 路径，例如 rules = "lists/domain_blacklist.txt"
+rules = ["example.com", "bad.example"]
+
+[qr]
+# 二维码识别出的文本会复用 domain 的黑/白名单规则
+enabled = true
+
+[keyword]
+# 可选："blacklist"、"whitelist"、"off"
+mode = "blacklist"
+rules = ["代充", "引流"]
+
+[regex]
+# 可选："blacklist"、"whitelist"、"off"
+mode = "blacklist"
+rules = ["(?i)t\\.me/[a-z0-9_]+", "QQ[:：]?\\s*\\d{6,}"]
+
+[punishment]
+# 可选："撤回"、"撤回相关所有消息"、"警告"、"移除"、"拉黑"
+# 也支持英文："recall"、"recall_related"、"warn"、"kick"、"blacklist"
+# 配置 "拉黑" 时会自动同时执行移除。
+single_actions = ["撤回", "警告"]
+
+[escalation]
+enabled = true
+threshold = 3
+actions = ["移除"]
